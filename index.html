@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>homepage</title>
+</head>
+<body>
+    <h1>WELCOME</h1>
+    <div class="login">
+        <form onsubmit="event.preventDefault(); login()">
+          <input required type="text" name="username" id="username" placeholder="username"/>
+          <input required type="text" name="password" id="password" placeholder="password"/>
+          <button type="submit">Submit Information</button>
+      </form>
+        </div>
+        <p>Not registered? <a href="./register.html">register</a></p>
+        <p>admin login <a href="./admin-login.html">admin</a></p>
+    <script src="./scripts/index.js"></script>
+</body>
+</html>
