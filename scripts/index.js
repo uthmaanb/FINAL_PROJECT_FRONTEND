@@ -103,7 +103,7 @@ function adminReg() {
             last_name,
             cell,
             email,
-            password,
+            password
         }),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
