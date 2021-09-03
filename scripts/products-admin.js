@@ -71,15 +71,6 @@ function toCart(id) {
   console.log(cart)
 }
 
-// delete function
-function deleteProduct(prod_id) {
-  console.log(prod_id);
-  let delConfirm = confirm("Are you sure you want to delete this product?");
-  if (delConfirm) {
-    fetch(`https://pure-ocean-21812.herokuapp.com/delete-products/${prod_id}`);
-  }
-}
-
 // toggle modal function
 function toggleModal(modalID) {
   document.getElementById(modalID).classList.toggle("active");
@@ -114,4 +105,13 @@ function editProd(e) {
   .then((data) => {
       console.log(data);
   });
+}
+
+// delete function
+function deleteProduct(prod_id) {
+  console.log(prod_id);
+  let delConfirm = confirm("Are you sure you want to delete this product?");
+  if (delConfirm) {
+    fetch(`https://pure-ocean-21812.herokuapp.com/delete-products/${prod_id}`);
+  }
 }

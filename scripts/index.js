@@ -117,10 +117,14 @@ function adminReg() {
 
 // display products
 let products = [];
+let cart = []  
+
 
 fetch("https://pure-ocean-21812.herokuapp.com/products/")
   .then((response) => response.json())
   .then((json) => {
+    products = json.data
+    console.log(json.data);
     renderproducts(json.data);
   });
 
@@ -128,15 +132,26 @@ function renderproducts(products) {
   let productContainer = document.querySelector("#products-container");
   productContainer.innerHTML = "";
 
-  products.forEach((products) => {
+  products.forEach((product) => {
     productContainer.innerHTML += `
       <div class="products">
-        <h3>${products[0]}. ${products[1]}</h3>
-        <h3 class="product-name">${products[4]}</h3>
-        <h3 class="product-discription">${products[2]}</h3>
-        <h3 class="product-price">${products[3]}</h3>
-        <h3 class="quantity">${products[5]}</h3>
+        <h3>${product.prod_id}. ${product.name}</h3>
+        <h3 class="product-type">${product.prod_type}</h3>
+        <h3 class="product-discription">${product.description}</h3>
+        <h3 class="product-price">${product.price}</h3>
+        <button onclick="toCart(${product.prod_id})">Cart</button>
       </div>
     `;
   });
+}
+
+// add to cart
+
+function toCart(id) {
+    // console.log(id);
+    let product = products.find(item => {
+      return item.prod_id == id
+    });
+    cart.push(product)
+    console.log(cart)
 }
