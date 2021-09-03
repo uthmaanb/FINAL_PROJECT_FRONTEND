@@ -1,4 +1,9 @@
 
+// all products page
+const storage = window.localStorage
+
+let base_URL = "https://pure-ocean-21812.herokuapp.com/products/";
+
 //user login function
 function login() {
     // get data from form
@@ -120,13 +125,17 @@ let products = [];
 let cart = []  
 
 
-fetch("https://pure-ocean-21812.herokuapp.com/products/")
-  .then((response) => response.json())
-  .then((json) => {
-    products = json.data
-    console.log(json.data);
-    renderproducts(json.data);
-  });
+function getData(url) {
+    fetch(url)
+        .then((response) => response.json())
+        .then((json) => {
+        products = json.data
+        renderproducts(json.data);
+        });
+}
+
+getData(base_URL);
+  
 
 function renderproducts(products) {
   let productContainer = document.querySelector("#products-container");
@@ -139,19 +148,54 @@ function renderproducts(products) {
         <h3 class="product-type">${product.prod_type}</h3>
         <h3 class="product-discription">${product.description}</h3>
         <h3 class="product-price">${product.price}</h3>
-        <button onclick="toCart(${product.prod_id})">Cart</button>
+        <button onclick="toCart(${product.prod_id}); showCart()">Cart</button>
       </div>
     `;
   });
 }
 
-// add to cart
+// toggle modal function
+function toggleModal(modalID) {
+    document.getElementById(modalID).classList.toggle("active");
+}
 
+// add to cart
 function toCart(id) {
     // console.log(id);
     let product = products.find(item => {
       return item.prod_id == id
     });
     cart.push(product)
-    console.log(cart)
+}
+
+function showCart() {
+	let container = document.querySelector("#cart-modal");
+	container.innerHTML = "";
+	console.log(cart);
+	cart.forEach((item) => {
+		container.innerHTML += `
+		<div class="cart-item">
+			<div>
+                <button onclick="remove(${item.prod_id})">remove</button>
+				<h3>Name: ${item.prod_id} ${item.name}</h3>
+				<p>Price: R${item.price}</p>
+				<p>Description: <q>${item.description}</q></p>
+				<p>Type: ${item.prod_type}</p>
+			</div>
+		</div>
+		`;
+	});
+}
+
+// remove from cart (doesn't remove from cart display)
+// function remove(item_id){
+//     cart.pop(item_id);
+//     console.log(cart)
+// }
+
+// remove from cart
+function remove(id) {
+    cart = cart.filter(item => item.prod_id != id)
+    showCart(cart);
+    alert('Removed from cart')
 }

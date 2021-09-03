@@ -8,6 +8,7 @@
 
     <!-- stylesheets -->
     <link rel="stylesheet" href="./styles/admin-viewprod.css">
+    <link rel="stylesheet" href="./styles/index.css">
 </head>
 <body>
     <header>
@@ -21,8 +22,17 @@
             <p>Not registered? <a href="./register.html">register</a></p>
             <p>admin login <a href="./admin-login.html">admin</a></p>
     </header>
+    <button class="cart-btn" onclick="toggleModal('cart-modal')">view cart</button>
+
     <h1>WELCOME</h1>
     <div id="products-container"></div>
+
+    <div id="cart-modal" class="modal">
+        <div class="cartmodal">
+          <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
+        </div>
+    </div>
+
     <script src="./scripts/index.js"></script>
 </body>
 </html>
