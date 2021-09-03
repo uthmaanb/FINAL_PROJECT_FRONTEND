@@ -1,141 +1,137 @@
-
 // all products page
-const storage = window.localStorage
+const storage = window.localStorage;
 
 let base_URL = "https://pure-ocean-21812.herokuapp.com/products/";
 
 //user login function
 function login() {
-    // get data from form
-    let username = document.querySelector('#username').value;
-    let password = document.querySelector('#password').value;
-    console.log(username, password);
+  // get data from form
+  let username = document.querySelector("#username").value;
+  let password = document.querySelector("#password").value;
+  console.log(username, password);
 
-    // send data to api
-    fetch("https://pure-ocean-21812.herokuapp.com/users/", {
-        method: 'PATCH',
-        body: JSON.stringify({
-            username,
-            password
-        }),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        }
-    })
+  // send data to api
+  fetch("https://pure-ocean-21812.herokuapp.com/users/", {
+    method: "PATCH",
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
     .then((res) => res.json())
     .then((data) => {
-        console.log(data);
+      console.log(data);
     });
 }
 
 //user register function
 function register() {
-    // get data from form
-    let username = document.querySelector('#username').value;
-    let first_name = document.querySelector('#first_name').value;
-    let last_name = document.querySelector('#last_name').value;
-    let cell = document.querySelector('#cell').value;
-    let email = document.querySelector('#email').value;
-    let password = document.querySelector('#password').value;
-    let address = document.querySelector('#address').value;
-    console.log(username, password);
+  // get data from form
+  let username = document.querySelector("#username").value;
+  let first_name = document.querySelector("#first_name").value;
+  let last_name = document.querySelector("#last_name").value;
+  let cell = document.querySelector("#cell").value;
+  let email = document.querySelector("#email").value;
+  let password = document.querySelector("#password").value;
+  let address = document.querySelector("#address").value;
+  console.log(username, password);
 
-    // send data to api
-    fetch("https://pure-ocean-21812.herokuapp.com/users/", {
-        method: 'POST',
-        body: JSON.stringify({
-            username,
-            first_name,
-            last_name,
-            cell,
-            email,
-            password,
-            address
-        }),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        }
-    })
+  // send data to api
+  fetch("https://pure-ocean-21812.herokuapp.com/users/", {
+    method: "POST",
+    body: JSON.stringify({
+      username,
+      first_name,
+      last_name,
+      cell,
+      email,
+      password,
+      address,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
     .then((res) => res.json())
     .then((data) => {
-        console.log(data);
+      console.log(data);
     });
-    window.location.href = 'index.html';
+  window.location.href = "index.html";
 }
-
 
 //admin login function
 function adminLogin() {
-    // get data from form
-    let username = document.querySelector('#username').value;
-    let password = document.querySelector('#password').value;
-    console.log(username, password);
+  // get data from form
+  let username = document.querySelector("#username").value;
+  let password = document.querySelector("#password").value;
+  console.log(username, password);
 
-    // send data to api
-    fetch("https://pure-ocean-21812.herokuapp.com/admin/", {
-        method: 'PATCH',
-        body: JSON.stringify({
-            username,
-            password
-        }),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        }
-    })
+  // send data to api
+  fetch("https://pure-ocean-21812.herokuapp.com/admin/", {
+    method: "PATCH",
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
     .then((res) => res.json())
     .then((data) => {
-        console.log(data);
+      console.log(data);
     });
 }
 
 //admin register function
 function adminReg() {
-    // get data from form
-    let username = document.querySelector('#username').value;
-    let first_name = document.querySelector('#first_name').value;
-    let last_name = document.querySelector('#last_name').value;
-    let cell = document.querySelector('#cell').value;
-    let email = document.querySelector('#email').value;
-    let password = document.querySelector('#password').value;
-    console.log(username, password);
+  // get data from form
+  let username = document.querySelector("#username").value;
+  let first_name = document.querySelector("#first_name").value;
+  let last_name = document.querySelector("#last_name").value;
+  let cell = document.querySelector("#cell").value;
+  let email = document.querySelector("#email").value;
+  let password = document.querySelector("#password").value;
+  console.log(username, password);
 
-    // send data to api
-    fetch("https://pure-ocean-21812.herokuapp.com/admin/", {
-        method: 'POST',
-        body: JSON.stringify({
-            username,
-            first_name,
-            last_name,
-            cell,
-            email,
-            password
-        }),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        }
-    })
+  // send data to api
+  fetch("https://pure-ocean-21812.herokuapp.com/admin/", {
+    method: "POST",
+    body: JSON.stringify({
+      username,
+      first_name,
+      last_name,
+      cell,
+      email,
+      password,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
     .then((res) => res.json())
     .then((data) => {
-        console.log(data);
+      console.log(data);
     });
 }
 
 // display products
 let products = [];
-let cart = []  
-
+let cart = [];
 
 function getData(url) {
-    fetch(url)
-        .then((response) => response.json())
-        .then((json) => {
-        products = json.data
-        renderproducts(json.data);
-        });
+  fetch(url)
+    .then((response) => response.json())
+    .then((json) => {
+      products = json.data;
+      renderproducts(json.data);
+    });
 }
 
 getData(base_URL);
-  
 
 function renderproducts(products) {
   let productContainer = document.querySelector("#products-container");
@@ -156,24 +152,25 @@ function renderproducts(products) {
 
 // toggle modal function
 function toggleModal(modalID) {
-    document.getElementById(modalID).classList.toggle("active");
+  document.getElementById(modalID).classList.toggle("active");
 }
 
 // add to cart
 function toCart(id) {
-    // console.log(id);
-    let product = products.find(item => {
-      return item.prod_id == id
-    });
-    cart.push(product)
+  // console.log(id);
+  let product = products.find((item) => {
+    return item.prod_id == id;
+  });
+  cart.push(product);
 }
 
+// display cart items
 function showCart() {
-	let container = document.querySelector("#cart-modal");
-	container.innerHTML = "";
-	console.log(cart);
-	cart.forEach((item) => {
-		container.innerHTML += `
+  let container = document.querySelector(".cartmodal");
+  container.innerHTML = "";
+  console.log(cart);
+  cart.forEach((item) => {
+    container.innerHTML += `
 		<div class="cart-item">
 			<div>
                 <button onclick="remove(${item.prod_id})">remove</button>
@@ -184,7 +181,7 @@ function showCart() {
 			</div>
 		</div>
 		`;
-	});
+  });
 }
 
 // remove from cart (doesn't remove from cart display)
@@ -195,7 +192,28 @@ function showCart() {
 
 // remove from cart
 function remove(id) {
-    cart = cart.filter(item => item.prod_id != id)
+  let delConfirm = confirm("Are you sure you want to remove this product?");
+  if (delConfirm) {
+    cart = cart.filter((item) => item.prod_id != id);
     showCart(cart);
-    alert('Removed from cart')
+    alert("Removed from cart");
+  }
+}
+
+// search bar
+function search() {
+  let searchTerm = document.querySelector("#searchTerm").value;
+  console.log(searchTerm);
+
+  let searchPhones = products.filter((products) =>
+    products.product_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  console.log(searchPhones);
+
+  if (searchPhones.length == 0) {
+    document.querySelector("#cart-modal").innerHTML =
+      "<h2>sorry, not found try something else...</h2>";
+  } else {
+    renderproducts(searchPhones);
+  }
 }

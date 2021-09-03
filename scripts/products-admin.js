@@ -1,13 +1,13 @@
 // display products
 let products = [];
-let cart = []
+let cart = [];
 
 fetch("https://pure-ocean-21812.herokuapp.com/products/")
   .then((response) => response.json())
   .then((json) => {
-      products = json.data
-      console.log(json.data);
-      renderproducts(products);
+    products = json.data;
+    console.log(json.data);
+    renderproducts(products);
   });
 
 function renderproducts(products) {
@@ -46,29 +46,31 @@ function renderproducts(products) {
       </div>
     `;
   });
-  document.querySelectorAll('.trigger').forEach(button => button.addEventListener('click', editProd)) 
+  document
+    .querySelectorAll(".trigger")
+    .forEach((button) => button.addEventListener("click", editProd));
 }
 
 window.addEventListener("click", windowOnClick);
 
 function toggleModalUpdate(e) {
-  document.querySelector('.button-modal').id = e.target.id;
+  document.querySelector(".button-modal").id = e.target.id;
 }
 
 function windowOnClick(event) {
-  if (event.target === document.querySelector('.button-modal')) {
-      toggleModalUpdate();
+  if (event.target === document.querySelector(".button-modal")) {
+    toggleModalUpdate();
   }
 }
 
 // add to cart
 function toCart(id) {
   // console.log(id);
-  let product = products.find(item => {
-    return item.prod_id == id
+  let product = products.find((item) => {
+    return item.prod_id == id;
   });
-  cart.push(product)
-  console.log(cart)
+  cart.push(product);
+  console.log(cart);
 }
 
 // toggle modal function
@@ -78,33 +80,33 @@ function toggleModal(modalID) {
 
 // edit function
 function editProd(e) {
-  console.log(e.target)
-  let productid = e.target.id
+  console.log(e.target);
+  let productid = e.target.id;
   // get data from form
   let name = document.querySelector(`#name${productid}`).value;
   let prod_type = document.querySelector(`#prod_type${productid}`).value;
   let description = document.querySelector(`#description${productid}`).value;
   let price = document.querySelector(`#price${productid}`).value;
 
-  console.log(name, prod_type, description, price, productid)
+  console.log(name, prod_type, description, price, productid);
 
   // send data to api
   fetch(`https://pure-ocean-21812.herokuapp.com/edit-product/${productid}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-          name: name,
-          prod_type: prod_type,
-          description: description,
-          price: price
-      }),
-      headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-      }
+    method: "PUT",
+    body: JSON.stringify({
+      name: name,
+      prod_type: prod_type,
+      description: description,
+      price: price,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
   })
-  .then((res) => res.json())
-  .then((data) => {
+    .then((res) => res.json())
+    .then((data) => {
       console.log(data);
-  });
+    });
 }
 
 // delete function

@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>homepage</title>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="./styles/admin-viewprod.css">
-    <link rel="stylesheet" href="./styles/index.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./styles/admin-viewprod.css" />
+    <link rel="stylesheet" href="./styles/index.css" />
+  </head>
+  <body>
     <header>
-        <div class="login">
-            <form onsubmit="event.preventDefault(); login()">
-              <input required type="text" name="username" id="username" placeholder="username"/>
-              <input required type="text" name="password" id="password" placeholder="password"/>
-              <button type="submit">login</button>
-          </form>
-            </div>
-            <p>Not registered? <a href="./register.html">register</a></p>
-            <p>admin login <a href="./admin-login.html">admin</a></p>
+      <div class="login">
+        <form onsubmit="event.preventDefault(); login()">
+          <input
+            required
+            type="text"
+            name="username"
+            id="username"
+            placeholder="username"
+          />
+          <input
+            required
+            type="text"
+            name="password"
+            id="password"
+            placeholder="password"
+          />
+          <button type="submit">login</button>
+        </form>
+      </div>
+      <p>Not registered? <a href="./register.html">register</a></p>
+      <p>admin login <a href="./admin-login.html">admin</a></p>
     </header>
-    <button class="cart-btn" onclick="toggleModal('cart-modal')">view cart</button>
+    <button class="cart-btn" onclick="toggleModal('cart-modal')">
+      view cart
+    </button>
 
     <h1>WELCOME</h1>
+
     <div id="products-container"></div>
 
     <div id="cart-modal" class="modal">
-        <div class="cartmodal">
-          <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
-        </div>
+      <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
+      <div class="cartmodal"></div>
     </div>
 
     <script src="./scripts/index.js"></script>
-</body>
+  </body>
 </html>
