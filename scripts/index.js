@@ -8,7 +8,6 @@ function login() {
   // get data from form
   let username = document.querySelector("#username").value;
   let password = document.querySelector("#password").value;
-  console.log(username, password);
 
   // send data to api
   fetch("https://pure-ocean-21812.herokuapp.com/users/", {
@@ -201,19 +200,32 @@ function remove(id) {
 }
 
 // search bar
-function search() {
+function searchProd() {
   let searchTerm = document.querySelector("#searchTerm").value;
   console.log(searchTerm);
 
-  let searchPhones = products.filter((products) =>
-    products.product_name.toLowerCase().includes(searchTerm.toLowerCase())
+  let searchProd = products.filter((products) =>
+    products.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  console.log(searchPhones);
+  console.log(searchProd);
 
-  if (searchPhones.length == 0) {
-    document.querySelector("#cart-modal").innerHTML =
-      "<h2>sorry, not found try something else...</h2>";
+  if (searchProd.length == 0) {
+    document.querySelector("#products-container").innerHTML =
+      "<h2>Product not found.</h2>";
   } else {
+    renderproducts(searchProd);
+  }
+}
+
+// filter through products using buttons
+function productFilter(category) {
+  if (category !== "All") {
+    let searchPhones = products.filter((products) =>
+      products.prod_type.toLowerCase().includes(category.toLowerCase())
+    );
+    console.log(searchPhones);
     renderproducts(searchPhones);
+  } else {
+    renderproducts(products);
   }
 }

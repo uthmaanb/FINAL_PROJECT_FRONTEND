@@ -38,6 +38,24 @@
       view cart
     </button>
 
+    <div id="filters">
+      <form onsubmit="event.preventDefault(); searchProd()">
+        <input type="text" required id="searchTerm" />
+        <button type="submit">search</button>
+      </form>
+      <div id="button-filter">
+        <button class="btn" onclick="productFilter('All')" class="name">
+          Show all
+        </button>
+        <button class="btn" onclick="productFilter('cake')" class="name">
+          cake
+        </button>
+        <button class="btn" onclick="productFilter('savoury')" class="name">
+          savoury
+        </button>
+      </div>
+    </div>
+
     <h1>WELCOME</h1>
 
     <div id="products-container"></div>
