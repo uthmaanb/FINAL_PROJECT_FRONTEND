@@ -1,28 +1,34 @@
 // all products page
 const storage = window.localStorage;
 
-let base_URL = "https://pure-ocean-21812.herokuapp.com/products/";
+// products url
+let base_URL = "https://cryptic-escarpment-42625.herokuapp.com/products/";
+// users url
+let baseURL = "https://cryptic-escarpment-42625.herokuapp.com/users/";
 
 //user login function
 function login() {
-  // get data from form
-  let username = document.querySelector("#username").value;
-  let password = document.querySelector("#password").value;
-
-  // send data to api
-  fetch("https://pure-ocean-21812.herokuapp.com/users/", {
+  const username = document.querySelector("#username").value;
+  const password = document.querySelector("#password").value;
+  console.log(username, password);
+  fetch(baseURL, {
     method: "PATCH",
     body: JSON.stringify({
-      username,
-      password,
+      username: username,
+      password: password,
     }),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
     .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
+    .then((json) => {
+      console.log(json.data);
+      if (json.data == 0) {
+        alert("wrong details");
+      } else {
+        localStorage.setItem("users", JSON.stringify(json.data));
+      }
     });
 }
 
@@ -39,7 +45,7 @@ function register() {
   console.log(username, password);
 
   // send data to api
-  fetch("https://pure-ocean-21812.herokuapp.com/users/", {
+  fetch("https://cryptic-escarpment-42625.herokuapp.com/users/", {
     method: "POST",
     body: JSON.stringify({
       username,
@@ -69,7 +75,7 @@ function adminLogin() {
   console.log(username, password);
 
   // send data to api
-  fetch("https://pure-ocean-21812.herokuapp.com/admin/", {
+  fetch("https://cryptic-escarpment-42625.herokuapp.com/admin/", {
     method: "PATCH",
     body: JSON.stringify({
       username,
@@ -97,7 +103,7 @@ function adminReg() {
   console.log(username, password);
 
   // send data to api
-  fetch("https://pure-ocean-21812.herokuapp.com/admin/", {
+  fetch("https://cryptic-escarpment-42625.herokuapp.com/admin/", {
     method: "POST",
     body: JSON.stringify({
       username,
@@ -138,14 +144,14 @@ function renderproducts(products) {
 
   products.forEach((product) => {
     productContainer.innerHTML += `
-      <div class="products">
-        <h3>${product.prod_id}. ${product.name}</h3>
-        <h3 class="product-type">${product.prod_type}</h3>
-        <h3 class="product-discription">${product.description}</h3>
-        <h3 class="product-price">${product.price}</h3>
-        <button onclick="toCart(${product.prod_id}); showCart()">Cart</button>
-      </div>
-    `;
+	  <div class="products">
+		<h3>${product.prod_id}. ${product.name}</h3>
+		<h3 class="product-type">${product.prod_type}</h3>
+		<h3 class="product-discription">${product.description}</h3>
+		<h3 class="product-price">${product.price}</h3>
+		<button onclick="toCart(${product.prod_id}); showCart()">Cart</button>
+	  </div>
+	`;
   });
 }
 
@@ -172,7 +178,7 @@ function showCart() {
     container.innerHTML += `
 		<div class="cart-item">
 			<div>
-                <button onclick="remove(${item.prod_id})">remove</button>
+				<button onclick="remove(${item.prod_id})">remove</button>
 				<h3>Name: ${item.prod_id} ${item.name}</h3>
 				<p>Price: R${item.price}</p>
 				<p>Description: <q>${item.description}</q></p>

@@ -2,7 +2,7 @@
 let products = [];
 let cart = [];
 
-fetch("https://pure-ocean-21812.herokuapp.com/products/")
+fetch("https://cryptic-escarpment-42625.herokuapp.com/products/")
   .then((response) => response.json())
   .then((json) => {
     products = json.data;
@@ -91,22 +91,34 @@ function editProd(e) {
   console.log(name, prod_type, description, price, productid);
 
   // send data to api
-  fetch(`https://pure-ocean-21812.herokuapp.com/edit-product/${productid}`, {
-    method: "PUT",
-    body: JSON.stringify({
-      name: name,
-      prod_type: prod_type,
-      description: description,
-      price: price,
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
+  if (
+    (document.querySelector(`#name${productid}`).value.length == 0,
+    document.querySelector(`#prod_type${productid}`).value.length == 0,
+    document.querySelector(`#description${productid}`).value.length == 0,
+    document.querySelector(`#price${productid}`).value.length == 0)
+  ) {
+    alert("input is empty");
+  } else {
+    fetch(
+      `https://cryptic-escarpment-42625.herokuapp.com/edit-product/${productid}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          name: name,
+          prod_type: prod_type,
+          description: description,
+          price: price,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
 }
 
 // delete function
@@ -114,6 +126,8 @@ function deleteProduct(prod_id) {
   console.log(prod_id);
   let delConfirm = confirm("Are you sure you want to delete this product?");
   if (delConfirm) {
-    fetch(`https://pure-ocean-21812.herokuapp.com/delete-products/${prod_id}`);
+    fetch(
+      `https://cryptic-escarpment-42625.herokuapp.com/delete-products/${prod_id}`
+    );
   }
 }
