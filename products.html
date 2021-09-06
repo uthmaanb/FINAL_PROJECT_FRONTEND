@@ -5,9 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Products</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="./styles/admin-viewprod.css" />
   </head>
   <body>
+    <button class="cart-btn" onclick="toggleModal('cart-modal')">
+      view cart
+    </button>
+
+    <div id="filters">
+      <form onsubmit="event.preventDefault(); searchProd()">
+        <input type="text" required id="searchTerm" />
+        <button type="submit">search</button>
+      </form>
+      <div id="button-filter">
+        <button class="btn" onclick="productFilter('All')" class="name">
+          Show all
+        </button>
+        <button class="btn" onclick="productFilter('cake')" class="name">
+          cake
+        </button>
+        <button class="btn" onclick="productFilter('savoury')" class="name">
+          savoury
+        </button>
+      </div>
+    </div>
+
     <div id="products-container"></div>
+
+    <div id="cart-modal" class="modal">
+      <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
+      <div class="cartmodal"></div>
+    </div>
+
     <script src="./scripts/index.js"></script>
   </body>
 </html>

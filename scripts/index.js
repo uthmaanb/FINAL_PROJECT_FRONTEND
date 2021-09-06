@@ -71,24 +71,28 @@ function register() {
 //admin login function
 function adminLogin() {
   // get data from form
-  let username = document.querySelector("#username").value;
-  let password = document.querySelector("#password").value;
+  const username = document.querySelector("#username").value;
+  const password = document.querySelector("#password").value;
   console.log(username, password);
-
-  // send data to api
-  fetch("https://cryptic-escarpment-42625.herokuapp.com/admin/", {
+  fetch(baseURL, {
     method: "PATCH",
     body: JSON.stringify({
-      username,
-      password,
+      username: username,
+      password: password,
     }),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
     .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
+    .then((json) => {
+      console.log(json.data);
+      if (json.data == null) {
+        alert("wrong");
+      } else {
+        localStorage.setItem("admin", JSON.stringify(json.data));
+        window.location = "./products-admin.html";
+      }
     });
 }
 
@@ -139,6 +143,10 @@ function getData(url) {
 
 getData(base_URL);
 
+if (storage["cart"]) {
+  cart = JSON.parse(storage.getItem("cart"));
+}
+
 function renderproducts(products) {
   let productContainer = document.querySelector("#products-container");
   productContainer.innerHTML = "";
@@ -150,7 +158,7 @@ function renderproducts(products) {
 		<h3 class="product-type">${product.prod_type}</h3>
 		<h3 class="product-discription">${product.description}</h3>
 		<h3 class="product-price">${product.price}</h3>
-		<button onclick="toCart(${product.prod_id}); showCart()">Cart</button>
+		<button onclick="toCart(${product.prod_id})">Cart</button>
 	  </div>
 	`;
   });
@@ -168,18 +176,21 @@ function toCart(id) {
     return item.prod_id == id;
   });
   cart.push(product);
+  console.log(cart);
+  storage.setItem("cart", JSON.stringify(cart));
 }
 
 // display cart items
-function showCart() {
+if (window.localStorage.getItem("cart")) {
+  let cart = JSON.parse(window.localStorage.getItem("cart"));
+  console.log(cart);
   let container = document.querySelector(".cartmodal");
   container.innerHTML = "";
-  console.log(cart);
   cart.forEach((item) => {
     container.innerHTML += `
 		<div class="cart-item">
 			<div>
-				<button onclick="remove(${item.prod_id})">remove</button>
+				<button class='rmvbtn' onclick='event.preventDefault()' id='${item.prod_id}'>remove</button>
 				<h3>Name: ${item.prod_id} ${item.name}</h3>
 				<p>Price: R${item.price}</p>
 				<p>Description: <q>${item.description}</q></p>
@@ -188,21 +199,21 @@ function showCart() {
 		</div>
 		`;
   });
+  document
+    .querySelectorAll(".rmvbtn")
+    .forEach((button) => button.addEventListener("click", remove));
 }
 
-// remove from cart (doesn't remove from cart display)
-// function remove(item_id){
-//     cart.pop(item_id);
-//     console.log(cart)
-// }
-
-// remove from cart
-function remove(id) {
-  let delConfirm = confirm("Are you sure you want to remove this product?");
-  if (delConfirm) {
-    cart = cart.filter((item) => item.prod_id != id);
-    showCart(cart);
-    alert("Removed from cart");
+// remove function
+function remove(e) {
+  console.log(e.target);
+  let name = e.target.id;
+  for (let item in cart) {
+    if (name == cart[item].prod_id) {
+      cart.splice(item, 1);
+      window.localStorage.setItem("cart", JSON.stringify(cart));
+      window.location.reload();
+    }
   }
 }
 
