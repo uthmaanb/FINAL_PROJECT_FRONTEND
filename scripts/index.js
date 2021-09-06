@@ -24,10 +24,11 @@ function login() {
     .then((res) => res.json())
     .then((json) => {
       console.log(json.data);
-      if (json.data == 0) {
-        alert("wrong details");
+      if (json.data == null) {
+        alert("wrong");
       } else {
         localStorage.setItem("users", JSON.stringify(json.data));
+        window.location = "./products-admin.html";
       }
     });
 }
