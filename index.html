@@ -34,9 +34,6 @@
       <p>Not registered? <a href="./register.html">register</a></p>
       <p>admin login <a href="./admin-login.html">admin</a></p>
     </header>
-    <button class="cart-btn" onclick="toggleModal('cart-modal')">
-      view cart
-    </button>
 
     <div id="filters">
       <form onsubmit="event.preventDefault(); searchProd()">
@@ -59,11 +56,6 @@
     <h1>WELCOME</h1>
 
     <div id="products-container"></div>
-
-    <div id="cart-modal" class="modal">
-      <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
-      <div class="cartmodal"></div>
-    </div>
 
     <script src="./scripts/index.js"></script>
   </body>

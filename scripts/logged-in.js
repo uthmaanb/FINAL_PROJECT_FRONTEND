@@ -5,8 +5,6 @@ const storage = window.localStorage;
 let base_URL = "https://cryptic-escarpment-42625.herokuapp.com/products/";
 // users url
 let baseURL = "https://cryptic-escarpment-42625.herokuapp.com/users/";
-// admin url
-let basURL = "https://cryptic-escarpment-42625.herokuapp.com/admin/";
 
 //user login function
 function login() {
@@ -29,7 +27,7 @@ function login() {
       if (json.data == null) {
         alert("wrong");
       } else {
-        storage.setItem("users", JSON.stringify(json.data));
+        localStorage.setItem("users", JSON.stringify(json.data));
         window.location = "./products-admin.html";
       }
     });
@@ -48,7 +46,7 @@ function register() {
   console.log(username, password);
 
   // send data to api
-  fetch(baseURL, {
+  fetch("https://cryptic-escarpment-42625.herokuapp.com/users/", {
     method: "POST",
     body: JSON.stringify({
       username,
@@ -76,7 +74,7 @@ function adminLogin() {
   const username = document.querySelector("#username").value;
   const password = document.querySelector("#password").value;
   console.log(username, password);
-  fetch(basURL, {
+  fetch(baseURL, {
     method: "PATCH",
     body: JSON.stringify({
       username: username,
@@ -92,7 +90,7 @@ function adminLogin() {
       if (json.data == null) {
         alert("wrong");
       } else {
-        storage.setItem("admin", JSON.stringify(json.data));
+        localStorage.setItem("admin", JSON.stringify(json.data));
         window.location = "./products-admin.html";
       }
     });
@@ -110,7 +108,7 @@ function adminReg() {
   console.log(username, password);
 
   // send data to api
-  fetch(basURL, {
+  fetch("https://cryptic-escarpment-42625.herokuapp.com/admin/", {
     method: "POST",
     body: JSON.stringify({
       username,
@@ -160,15 +158,63 @@ function renderproducts(products) {
 		<h3 class="product-type">${product.prod_type}</h3>
 		<h3 class="product-discription">${product.description}</h3>
 		<h3 class="product-price">${product.price}</h3>
-		<button onclick="addToCart()">Cart</button>
+		<button onclick="toCart(${product.prod_id})">Cart</button>
 	  </div>
 	`;
   });
 }
 
+// toggle modal function
+function toggleModal(modalID) {
+  document.getElementById(modalID).classList.toggle("active");
+}
+
 // add to cart
-function addToCart() {
-  alert("you need to log in");
+function toCart(id) {
+  // console.log(id);
+  let product = products.find((item) => {
+    return item.prod_id == id;
+  });
+  cart.push(product);
+  console.log(cart);
+  storage.setItem("cart", JSON.stringify(cart));
+}
+
+// display cart items
+if (window.localStorage.getItem("cart")) {
+  let cart = JSON.parse(window.localStorage.getItem("cart"));
+  console.log(cart);
+  let container = document.querySelector(".cartmodal");
+  container.innerHTML = "";
+  cart.forEach((item) => {
+    container.innerHTML += `
+		<div class="cart-item">
+			<div>
+				<button class='rmvbtn' onclick='event.preventDefault()' id='${item.prod_id}'>remove</button>
+				<h3>Name: ${item.prod_id} ${item.name}</h3>
+				<p>Price: R${item.price}</p>
+				<p>Description: <q>${item.description}</q></p>
+				<p>Type: ${item.prod_type}</p>
+			</div>
+		</div>
+		`;
+  });
+  document
+    .querySelectorAll(".rmvbtn")
+    .forEach((button) => button.addEventListener("click", remove));
+}
+
+// remove function
+function remove(e) {
+  console.log(e.target);
+  let name = e.target.id;
+  for (let item in cart) {
+    if (name == cart[item].prod_id) {
+      cart.splice(item, 1);
+      window.localStorage.setItem("cart", JSON.stringify(cart));
+      window.location.reload();
+    }
+  }
 }
 
 // search bar
