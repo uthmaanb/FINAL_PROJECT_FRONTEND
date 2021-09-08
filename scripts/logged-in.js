@@ -63,7 +63,7 @@ function toCart(id) {
     return item.prod_id == id;
   });
 
-  // adding user id to product array in cart
+  // adding user id to product array in cart !!!!!!!!!!!!!!!!!!!
   product = { ...product, user: user };
 
   cart.push(product);
@@ -72,15 +72,17 @@ function toCart(id) {
 }
 
 // display cart items
-if (window.localStorage.getItem("cart")) {
-  let cart = JSON.parse(window.localStorage.getItem("cart"));
-  console.log(cart);
-  // cart = [];
-  // storage.setItem("cart", JSON.stringify(cart));
-  let container = document.querySelector(".cartmodal");
-  container.innerHTML = "";
-  cart.forEach((item) => {
-    container.innerHTML += `
+if (storage.getItem("cart")) {
+  for (products in cart) {
+    if (cart[0].user == user) {
+      let cart = JSON.parse(window.localStorage.getItem("cart"));
+      console.log(cart);
+      // cart = [];
+      // storage.setItem("cart", JSON.stringify(cart));
+      let container = document.querySelector(".cartmodal");
+      container.innerHTML = "";
+      cart.forEach((item) => {
+        container.innerHTML += `
 		<div class="cart-item">
 			<div>
 				<button class='rmvbtn' onclick='event.preventDefault()' id='${item.prod_id}'>remove</button>
@@ -91,19 +93,20 @@ if (window.localStorage.getItem("cart")) {
 			</div>
 		</div>
 		`;
-  });
+      });
+      // calculate total price
+      let totalPrice = cart.reduce(
+        (total, item) => total + parseInt(item.price),
+        0
+      );
+      container.innerHTML += `<h3>Your total is: ${totalPrice} </h3>`;
 
-  // calculate total price
-  let totalPrice = cart.reduce(
-    (total, item) => total + parseInt(item.price),
-    0
-  );
-  container.innerHTML += `<h3>Your total is: ${totalPrice} </h3>`;
-
-  // for remove button to run function
-  document
-    .querySelectorAll(".rmvbtn")
-    .forEach((button) => button.addEventListener("click", remove));
+      // for remove button to run function
+      document
+        .querySelectorAll(".rmvbtn")
+        .forEach((button) => button.addEventListener("click", remove));
+    }
+  }
 }
 
 // remove function
