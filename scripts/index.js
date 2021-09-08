@@ -8,37 +8,6 @@ let baseURL = "https://cryptic-escarpment-42625.herokuapp.com/users/";
 // admin url
 let basURL = "https://cryptic-escarpment-42625.herokuapp.com/admin/";
 
-//user login function
-function login() {
-  const username = document.querySelector("#username").value;
-  const password = document.querySelector("#password").value;
-  console.log(username, password);
-  fetch(baseURL, {
-    method: "PATCH",
-    body: JSON.stringify({
-      username: username,
-      password: password,
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((res) => res.json())
-    .then((json) => {
-      console.log(json.data);
-      if (json.data == null) {
-        alert("wrong");
-      } else {
-        user = json.data;
-        console.log(user.user_id);
-        userid = user.user_id;
-        storage.setItem("users", userid);
-        console.log(`user id: ${userid}`);
-        window.location.href = "products.html";
-      }
-    });
-}
-
 //user register function
 function register() {
   // get data from form
@@ -70,8 +39,39 @@ function register() {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
+      window.location.href = "index.html";
     });
-  window.location.href = "index.html";
+}
+
+//user login function
+function login() {
+  const username = document.querySelector("#username").value;
+  const password = document.querySelector("#password").value;
+  console.log(username, password);
+  fetch(baseURL, {
+    method: "PATCH",
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      console.log(json.data);
+      if (json.data == null) {
+        alert("wrong");
+      } else {
+        user = json.data;
+        console.log(user.user_id);
+        userid = user.user_id;
+        storage.setItem("users", userid);
+        console.log(`user id: ${userid}`);
+        window.location.href = "products.html";
+      }
+    });
 }
 
 //admin login function

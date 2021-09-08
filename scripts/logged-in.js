@@ -73,40 +73,36 @@ function toCart(id) {
 
 // display cart items
 if (storage.getItem("cart")) {
-  for (products in cart) {
-    if (cart[0].user == user) {
-      let cart = JSON.parse(window.localStorage.getItem("cart"));
-      console.log(cart);
-      // cart = [];
-      // storage.setItem("cart", JSON.stringify(cart));
-      let container = document.querySelector(".cartmodal");
-      container.innerHTML = "";
-      cart.forEach((item) => {
-        container.innerHTML += `
-		<div class="cart-item">
-			<div>
-				<button class='rmvbtn' onclick='event.preventDefault()' id='${item.prod_id}'>remove</button>
-				<h3>Name: ${item.prod_id} ${item.name}</h3>
-				<p>Price: R${item.price}</p>
-				<p>Description: <q>${item.description}</q></p>
-				<p>Type: ${item.prod_type}</p>
-			</div>
-		</div>
-		`;
-      });
-      // calculate total price
-      let totalPrice = cart.reduce(
-        (total, item) => total + parseInt(item.price),
-        0
-      );
-      container.innerHTML += `<h3>Your total is: ${totalPrice} </h3>`;
-
-      // for remove button to run function
-      document
-        .querySelectorAll(".rmvbtn")
-        .forEach((button) => button.addEventListener("click", remove));
+  let cart = JSON.parse(window.localStorage.getItem("cart"));
+  console.log(cart);
+  let container = document.querySelector(".cartmodal");
+  container.innerHTML = "";
+  cart.forEach((item) => {
+    if (item.user == user) {
+      container.innerHTML += `
+      <div class="cart-item">
+        <div>
+          <button class='rmvbtn' onclick='event.preventDefault()' id='${item.prod_id}'>remove</button>
+          <h3>Name: ${item.prod_id} ${item.name}</h3>
+          <p>Price: R${item.price}</p>
+          <p>Description: <q>${item.description}</q></p>
+          <p>Type: ${item.prod_type}</p>
+        </div>
+      </div>
+      `;
     }
-  }
+  });
+  // calculate total price
+  let totalPrice = cart.reduce(
+    (total, item) => total + parseInt(item.price),
+    0
+  );
+  container.innerHTML += `<h3>Your total is: ${totalPrice} </h3>`;
+
+  // for remove button to run function
+  document
+    .querySelectorAll(".rmvbtn")
+    .forEach((button) => button.addEventListener("click", remove));
 }
 
 // remove function
@@ -178,4 +174,10 @@ function viewProfile() {
         <p>password: ${user.password}</p>
       </div>`;
     });
+}
+
+function logout() {
+  user = [];
+  storage.setItem("users", JSON.stringify(user));
+  window.location.href = "index.html";
 }
