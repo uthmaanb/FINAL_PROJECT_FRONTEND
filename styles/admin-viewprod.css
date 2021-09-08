@@ -86,3 +86,12 @@ body {
 .modalbtn:hover {
   background-color: red;
 }
+
+#adprodform {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 3%;
+  padding-left: 3%;
+}

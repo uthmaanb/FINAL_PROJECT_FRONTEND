@@ -29,8 +29,12 @@ function login() {
       if (json.data == null) {
         alert("wrong");
       } else {
-        storage.setItem("users", JSON.stringify(json.data));
-        window.location = "./products-admin.html";
+        user = json.data;
+        console.log(user.user_id);
+        userid = user.user_id;
+        storage.setItem("users", userid);
+        console.log(`user id: ${userid}`);
+        window.location.href = "products.html";
       }
     });
 }

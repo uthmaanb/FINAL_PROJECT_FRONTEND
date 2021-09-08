@@ -10,7 +10,74 @@
     <link rel="stylesheet" href="./styles/admin-viewprod.css" />
   </head>
   <body>
+    <div id="filters">
+      <form onsubmit="event.preventDefault(); searchProd()">
+        <input type="text" required id="searchTerm" />
+        <button type="submit">search</button>
+      </form>
+      <div id="button-filter">
+        <button class="btn" onclick="productFilter('All')" class="name">
+          Show all
+        </button>
+        <button class="btn" onclick="productFilter('cake')" class="name">
+          cake
+        </button>
+        <button class="btn" onclick="productFilter('savoury')" class="name">
+          savoury
+        </button>
+      </div>
+      <div>
+        <button class="adprod" onclick=" toggleModal('cart-modal')">
+          Add Product
+        </button>
+      </div>
+    </div>
+
     <div id="products-container"></div>
+
+    <div id="cart-modal" class="modal">
+      <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
+      <div class="cartmodal">
+        <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
+        <form>
+          <input
+            required
+            type="text"
+            name="name"
+            id="name"
+            placeholder="name"
+          />
+          <input
+            required
+            type="text"
+            name="prod_type"
+            id="prod_type"
+            placeholder="prod_type"
+          />
+          <input
+            required
+            type="text"
+            name="description"
+            id="description"
+            placeholder="description"
+          />
+          <input
+            required
+            type="text"
+            name="price"
+            id="price"
+            placeholder="price"
+          />
+          <button
+            type="submit"
+            class="button-modal-adprod"
+            onclick="event.preventDefault(); addProduct()"
+          >
+            Submit Information
+          </button>
+        </form>
+      </div>
+    </div>
 
     <script src="./scripts/products-admin.js"></script>
   </body>

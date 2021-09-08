@@ -1,3 +1,6 @@
+// base urls
+let baseURL = "https://cryptic-escarpment-42625.herokuapp.com/products/";
+
 // display products
 let products = [];
 let cart = [];
@@ -21,7 +24,6 @@ function renderproducts(products) {
         <h3 class="product-type">${product.prod_type}</h3>
         <h3 class="product-descrip">${product.description}</h3>
         <h3 class="price">R${product.price}</h3>
-        <button onclick="toCart(${product.prod_id})">Cart</button>
         <button onclick="deleteProduct(${product.prod_id})">delete</button>
         <button onclick="toggleModal('edit-modal-${product.prod_id}')" id='${product.prod_id}'>edit</button>
 
@@ -63,19 +65,39 @@ function windowOnClick(event) {
   }
 }
 
-// add to cart
-function toCart(id) {
-  // console.log(id);
-  let product = products.find((item) => {
-    return item.prod_id == id;
-  });
-  cart.push(product);
-  console.log(cart);
-}
-
 // toggle modal function
 function toggleModal(modalID) {
   document.getElementById(modalID).classList.toggle("active");
+}
+
+//Add Product function
+function addProduct() {
+  // get data from form
+  let name = document.querySelector("#name").value;
+  let prod_type = document.querySelector("#prod_type").value;
+  let description = document.querySelector("#description").value;
+  let price = document.querySelector("#price").value;
+
+  console.log(username, password);
+
+  // send data to api
+  fetch(baseURL, {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      prod_type,
+      description,
+      price,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+    });
+  window.location.reload();
 }
 
 // edit function
@@ -129,5 +151,36 @@ function deleteProduct(prod_id) {
     fetch(
       `https://cryptic-escarpment-42625.herokuapp.com/delete-products/${prod_id}`
     );
+  }
+}
+
+// search bar
+function searchProd() {
+  let searchTerm = document.querySelector("#searchTerm").value;
+  console.log(searchTerm);
+
+  let searchProd = products.filter((products) =>
+    products.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  console.log(searchProd);
+
+  if (searchProd.length == 0) {
+    document.querySelector("#products-container").innerHTML =
+      "<h2>Product not found.</h2>";
+  } else {
+    renderproducts(searchProd);
+  }
+}
+
+// filter through products using buttons
+function productFilter(category) {
+  if (category !== "All") {
+    let searchPhones = products.filter((products) =>
+      products.prod_type.toLowerCase().includes(category.toLowerCase())
+    );
+    console.log(searchPhones);
+    renderproducts(searchPhones);
+  } else {
+    renderproducts(products);
   }
 }

@@ -1,132 +1,13 @@
 // all products page
 const storage = window.localStorage;
 
+let user = storage.getItem("users");
+console.log(`user id: ${user}`);
+
 // products url
 let base_URL = "https://cryptic-escarpment-42625.herokuapp.com/products/";
 // users url
 let baseURL = "https://cryptic-escarpment-42625.herokuapp.com/users/";
-
-//user login function
-function login() {
-  const username = document.querySelector("#username").value;
-  const password = document.querySelector("#password").value;
-  console.log(username, password);
-  fetch(baseURL, {
-    method: "PATCH",
-    body: JSON.stringify({
-      username: username,
-      password: password,
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((res) => res.json())
-    .then((json) => {
-      console.log(json.data);
-      if (json.data == null) {
-        alert("wrong");
-      } else {
-        localStorage.setItem("users", JSON.stringify(json.data));
-        window.location = "./products-admin.html";
-      }
-    });
-}
-
-//user register function
-function register() {
-  // get data from form
-  let username = document.querySelector("#username").value;
-  let first_name = document.querySelector("#first_name").value;
-  let last_name = document.querySelector("#last_name").value;
-  let cell = document.querySelector("#cell").value;
-  let email = document.querySelector("#email").value;
-  let password = document.querySelector("#password").value;
-  let address = document.querySelector("#address").value;
-  console.log(username, password);
-
-  // send data to api
-  fetch("https://cryptic-escarpment-42625.herokuapp.com/users/", {
-    method: "POST",
-    body: JSON.stringify({
-      username,
-      first_name,
-      last_name,
-      cell,
-      email,
-      password,
-      address,
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
-  window.location.href = "index.html";
-}
-
-//admin login function
-function adminLogin() {
-  // get data from form
-  const username = document.querySelector("#username").value;
-  const password = document.querySelector("#password").value;
-  console.log(username, password);
-  fetch(baseURL, {
-    method: "PATCH",
-    body: JSON.stringify({
-      username: username,
-      password: password,
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((res) => res.json())
-    .then((json) => {
-      console.log(json.data);
-      if (json.data == null) {
-        alert("wrong");
-      } else {
-        localStorage.setItem("admin", JSON.stringify(json.data));
-        window.location = "./products-admin.html";
-      }
-    });
-}
-
-//admin register function
-function adminReg() {
-  // get data from form
-  let username = document.querySelector("#username").value;
-  let first_name = document.querySelector("#first_name").value;
-  let last_name = document.querySelector("#last_name").value;
-  let cell = document.querySelector("#cell").value;
-  let email = document.querySelector("#email").value;
-  let password = document.querySelector("#password").value;
-  console.log(username, password);
-
-  // send data to api
-  fetch("https://cryptic-escarpment-42625.herokuapp.com/admin/", {
-    method: "POST",
-    body: JSON.stringify({
-      username,
-      first_name,
-      last_name,
-      cell,
-      email,
-      password,
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
-}
 
 // display products
 let products = [];
@@ -143,10 +24,17 @@ function getData(url) {
 
 getData(base_URL);
 
+// fetch data from localstorage
 if (storage["cart"]) {
   cart = JSON.parse(storage.getItem("cart"));
 }
 
+// if (storage["user"]) {
+//   vueuser = JSON.parse(storage.getItem("user"));
+//   console.log(vueuser);
+// }
+
+// render products
 function renderproducts(products) {
   let productContainer = document.querySelector("#products-container");
   productContainer.innerHTML = "";
@@ -171,10 +59,13 @@ function toggleModal(modalID) {
 
 // add to cart
 function toCart(id) {
-  // console.log(id);
   let product = products.find((item) => {
     return item.prod_id == id;
   });
+
+  // adding user id to product array in cart
+  product = { ...product, user: user };
+
   cart.push(product);
   console.log(cart);
   storage.setItem("cart", JSON.stringify(cart));
@@ -184,6 +75,8 @@ function toCart(id) {
 if (window.localStorage.getItem("cart")) {
   let cart = JSON.parse(window.localStorage.getItem("cart"));
   console.log(cart);
+  // cart = [];
+  // storage.setItem("cart", JSON.stringify(cart));
   let container = document.querySelector(".cartmodal");
   container.innerHTML = "";
   cart.forEach((item) => {
@@ -199,6 +92,15 @@ if (window.localStorage.getItem("cart")) {
 		</div>
 		`;
   });
+
+  // calculate total price
+  let totalPrice = cart.reduce(
+    (total, item) => total + parseInt(item.price),
+    0
+  );
+  container.innerHTML += `<h3>Your total is: ${totalPrice} </h3>`;
+
+  // for remove button to run function
   document
     .querySelectorAll(".rmvbtn")
     .forEach((button) => button.addEventListener("click", remove));
@@ -206,7 +108,6 @@ if (window.localStorage.getItem("cart")) {
 
 // remove function
 function remove(e) {
-  console.log(e.target);
   let name = e.target.id;
   for (let item in cart) {
     if (name == cart[item].prod_id) {
@@ -246,4 +147,32 @@ function productFilter(category) {
   } else {
     renderproducts(products);
   }
+}
+
+// user profile
+function viewProfile() {
+  console.log(`user id: ${storage.getItem("users")}`);
+  fetch(
+    `https://cryptic-escarpment-42625.herokuapp.com/edit-user/${storage.getItem(
+      "users"
+    )}`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      let user = data.data;
+      console.log(user.user_id);
+
+      let contain = document.querySelector(".usermodal");
+      contain.innerHTML = "";
+      contain.innerHTML = `
+      <div class="vewuser">
+        <p>username: ${user.username}</p>
+        <p>first_name: ${user.first_name}</p>
+        <p>last_name: ${user.last_name}</p>
+        <p>cell: ${user.cell}</p>
+        <p>email: ${user.email}</p>
+        <p>password: ${user.password}</p>
+      </div>`;
+    });
 }
