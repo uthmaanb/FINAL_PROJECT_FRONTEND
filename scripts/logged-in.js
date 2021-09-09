@@ -85,7 +85,7 @@ if (storage.getItem("cart")) {
           <button class='rmvbtn' onclick='event.preventDefault()' id='${item.user}'>remove</button>
           <h3>Name: ${item.prod_id} ${item.name}</h3>
           <p>Price: R${item.price}</p>
-          <p>Description: <q>${item.description}</q></p>
+          <p>Description: ${item.description}</p>
           <p>Type: ${item.prod_type}</p>
         </div>
       </div>
@@ -93,10 +93,18 @@ if (storage.getItem("cart")) {
     }
   });
   // calculate total price
-  let totalPrice = cart.reduce(
-    (total, item) => total + parseInt(item.price),
-    0
-  );
+
+  console.log(cart);
+  console.log(user);
+
+  let userCart = cart.filter((item) => item.user == user);
+  console.log(userCart);
+
+  let totalPrice = userCart.reduce((total, item) => {
+    return total + parseInt(item.price);
+  }, 0);
+
+  console.log(totalPrice);
   container.innerHTML += `<h3>Your total is: ${totalPrice} </h3>`;
 
   // for remove button to run function
