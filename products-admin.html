@@ -30,6 +30,9 @@
         <button class="adprod" onclick=" toggleModal('cart-modal')">
           Add Product
         </button>
+        <button class="view-users" onclick=" toggleModal('users-modal')">
+          view users
+        </button>
       </div>
     </div>
 
@@ -38,7 +41,6 @@
     <div id="cart-modal" class="modal">
       <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
       <div class="cartmodal">
-        <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
         <form>
           <input
             required
@@ -77,6 +79,11 @@
           </button>
         </form>
       </div>
+    </div>
+
+    <div id="users-modal" class="modal">
+      <button onclick="toggleModal('users-modal')" class="modalbtn">X</button>
+      <div class="usersmodal"></div>
     </div>
 
     <script src="./scripts/products-admin.js"></script>

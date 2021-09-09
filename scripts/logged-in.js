@@ -92,11 +92,8 @@ if (storage.getItem("cart")) {
       `;
     }
   });
+
   // calculate total price
-
-  console.log(cart);
-  console.log(user);
-
   let userCart = cart.filter((item) => item.user == user);
   console.log(userCart);
 
