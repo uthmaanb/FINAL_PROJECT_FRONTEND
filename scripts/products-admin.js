@@ -184,3 +184,30 @@ function productFilter(category) {
     renderproducts(products);
   }
 }
+
+function renderclients(clients) {
+  let productContainer = document.querySelector(".usersmodal");
+  productContainer.innerHTML = "";
+
+  clients.forEach((client) => {
+    productContainer.innerHTML += `
+	  <div class="clients">
+		<h3>${client.user_id}. ${client.username}</h3>
+		<h3 class="product-type">${client.first_name}</h3>
+		<h3 class="product-discription">${client.last_name}</h3>
+    <h3 class="product-discription">${client.cell}</h3>
+		<h3 class="product-price">${client.email}</h3>
+    <h3 class="product-price">${client.password}</h3>
+    <h3 class="product-price">${client.address}</h3>
+	  </div>
+	`;
+  });
+}
+
+fetch("https://cryptic-escarpment-42625.herokuapp.com/users/")
+  .then((response) => response.json())
+  .then((json) => {
+    clients = json.data;
+    console.log(json.data);
+    renderclients(clients);
+  });
