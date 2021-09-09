@@ -82,7 +82,7 @@ if (storage.getItem("cart")) {
       container.innerHTML += `
       <div class="cart-item">
         <div>
-          <button class='rmvbtn' onclick='event.preventDefault()' id='${item.prod_id}'>remove</button>
+          <button class='rmvbtn' onclick='event.preventDefault()' id='${item.user}'>remove</button>
           <h3>Name: ${item.prod_id} ${item.name}</h3>
           <p>Price: R${item.price}</p>
           <p>Description: <q>${item.description}</q></p>
@@ -107,14 +107,15 @@ if (storage.getItem("cart")) {
 
 // remove function
 function remove(e) {
-  let name = e.target.id;
-  for (let item in cart) {
-    if (name == cart[item].prod_id) {
+  let cart = JSON.parse(window.localStorage.getItem("cart"));
+  let userid = e.target.id;
+  cart.forEach((item) => {
+    if (item.user == userid) {
       cart.splice(item, 1);
       window.localStorage.setItem("cart", JSON.stringify(cart));
       window.location.reload();
     }
-  }
+  });
 }
 
 // search bar
