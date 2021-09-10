@@ -20,12 +20,15 @@ function renderproducts(products) {
   products.forEach((product) => {
     productContainer.innerHTML += `
       <div class="products">
-        <h3>${product.prod_id}. ${product.name}</h3>
+        <img class="image image-prod" src=${product.image} alt="pic">
+        <h3>${product.name}</h3>
         <h3 class="product-type">${product.prod_type}</h3>
         <h3 class="product-descrip">${product.description}</h3>
         <h3 class="price">R${product.price}</h3>
-        <button onclick="deleteProduct(${product.prod_id})">delete</button>
-        <button onclick="toggleModal('edit-modal-${product.prod_id}')" id='${product.prod_id}'>edit</button>
+        <div>
+          <button onclick="deleteProduct(${product.prod_id})">delete</button>
+          <button onclick="toggleModal('edit-modal-${product.prod_id}')" id='${product.prod_id}'>edit</button>
+        </div>
 
         <div id="edit-modal-${product.prod_id}" class="modal">
           <div class="modaler">
@@ -34,26 +37,27 @@ function renderproducts(products) {
             <!-- edit-prod -->
             <div class="editin">
               <form>
+                <input type="file" id="Image" name="image" required>
                 <input required type="text" name="name" id="name${product.prod_id}" placeholder="name"/>
                 <input required type="text" name="prod_type" id="prod_type${product.prod_id}" placeholder="prod_type"/>
                 <input required type="text" name="description" id="description${product.prod_id}" placeholder="description"/>
                 <input required type="text" name="price" id="price${product.prod_id}" placeholder="price"/>
-                <button type="submit" class='button-modal trigger' onclick='event.preventDefault()' id='${product.prod_id}'>Submit Information</button>
+                <button type="submit" class='button-modal trigger' onclick='event.preventDefault()' id="${product.prod_id}">Submit Information</button>
               </form>
+              <img src="" alt="" class="format-img" />
             </div>
           </div>
         </div>
-
-
       </div>
     `;
   });
   document
     .querySelectorAll(".trigger")
     .forEach((button) => button.addEventListener("click", editProd));
+  document
+    .querySelectorAll(`#Image`)
+    .forEach((input) => input.addEventListener("change", imageConverter));
 }
-
-window.addEventListener("click", windowOnClick);
 
 function toggleModalUpdate(e) {
   document.querySelector(".button-modal").id = e.target.id;
@@ -68,6 +72,26 @@ function windowOnClick(event) {
 // toggle modal function
 function toggleModal(modalID) {
   document.getElementById(modalID).classList.toggle("active");
+}
+
+// image converter
+function imageConverter() {
+  const image = document.querySelector(".format-img");
+  const file = document.querySelector(`#Image`).files[0];
+  const reader = new FileReader();
+
+  reader.addEventListener(
+    "load",
+    function () {
+      // convert image file to string
+      image.src = reader.result;
+    },
+    false
+  );
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
 }
 
 //Add Product function
@@ -105,6 +129,7 @@ function editProd(e) {
   console.log(e.target);
   let productid = e.target.id;
   // get data from form
+  let f_image = document.querySelector(".format-img").src;
   let name = document.querySelector(`#name${productid}`).value;
   let prod_type = document.querySelector(`#prod_type${productid}`).value;
   let description = document.querySelector(`#description${productid}`).value;
@@ -126,6 +151,7 @@ function editProd(e) {
       {
         method: "PUT",
         body: JSON.stringify({
+          image: f_image,
           name: name,
           prod_type: prod_type,
           description: description,
@@ -208,6 +234,5 @@ fetch("https://cryptic-escarpment-42625.herokuapp.com/users/")
   .then((response) => response.json())
   .then((json) => {
     clients = json.data;
-    console.log(json.data);
     renderclients(clients);
   });
