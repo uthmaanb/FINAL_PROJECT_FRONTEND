@@ -70,6 +70,7 @@ function toCart(id) {
   cart.push(product);
   console.log(cart);
   storage.setItem("cart", JSON.stringify(cart));
+  window.location.reload();
 }
 
 // display cart items
