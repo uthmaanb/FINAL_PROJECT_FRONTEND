@@ -200,6 +200,7 @@ function deleteProduct(prod_id) {
     fetch(
       `https://cryptic-escarpment-42625.herokuapp.com/delete-products/${prod_id}`
     );
+    window.location.reload();
   }
 }
 
