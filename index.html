@@ -17,28 +17,28 @@
     <link rel="stylesheet" href="./styles/index.css" />
   </head>
   <body>
-    <header>
-      <div class="login">
-        <form onsubmit="event.preventDefault(); login()">
-          <input
-            required
-            type="text"
-            name="username"
-            id="username"
-            placeholder="username"
-          />
-          <input
-            required
-            type="text"
-            name="password"
-            id="password"
-            placeholder="password"
-          />
-          <button type="submit">login</button>
-        </form>
+    <header class="thehead">
+      <form onsubmit="event.preventDefault(); login()">
+        <input
+          required
+          type="text"
+          name="username"
+          id="username"
+          placeholder="username"
+        />
+        <input
+          required
+          type="text"
+          name="password"
+          id="password"
+          placeholder="password"
+        />
+        <button type="submit">login</button>
+      </form>
+      <div class="reglinks">
+        <p><a href="./register.html">not registered?</a></p>
+        <p><a href="./admin-login.html">admin login</a></p>
       </div>
-      <p>Not registered? <a href="./register.html">register</a></p>
-      <p>admin login <a href="./admin-login.html">admin</a></p>
     </header>
 
     <div id="filters">

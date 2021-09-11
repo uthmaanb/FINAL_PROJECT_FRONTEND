@@ -1,0 +1,15 @@
+.thehead {
+  height: 13vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  background-color: #151623;
+}
+
+#filters {
+  height: 13vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}

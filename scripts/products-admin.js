@@ -1,3 +1,6 @@
+// all products page
+const storage = window.localStorage;
+
 // base urls
 let baseURL = "https://cryptic-escarpment-42625.herokuapp.com/products/";
 
@@ -256,3 +259,9 @@ fetch("https://cryptic-escarpment-42625.herokuapp.com/users/")
     clients = json.data;
     renderclients(clients);
   });
+
+function logout() {
+  admin = [];
+  storage.setItem("admin", JSON.stringify(admin));
+  window.location.href = "index.html";
+}
