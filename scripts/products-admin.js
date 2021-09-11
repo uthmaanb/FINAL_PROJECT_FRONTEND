@@ -16,10 +16,11 @@ fetch("https://cryptic-escarpment-42625.herokuapp.com/products/")
 function renderproducts(products) {
   let productContainer = document.querySelector("#products-container");
   productContainer.innerHTML = `
-  <div id="addprod-modal" class="modal">
+  <div id="addprod-modal" class="modal adprod-modal">
       <button onclick="toggleModal('addprod-modal')" class="modalbtn">X</button>
-      <div class="cartmodal">
-        <form>
+      
+      <div class="addprodmodal">
+        <form class='addprodform'>
           <input type="file" id="Image" name="image" required />
           <input required type="text" name="name" id="name" placeholder="name"/>
           <input required type="text" name="prod_type" id="prod_type" placeholder="prod_type"/>
