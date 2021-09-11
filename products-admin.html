@@ -36,7 +36,7 @@
         </button>
       </div>
       <div>
-        <button class="adprod" onclick=" toggleModal('cart-modal')">
+        <button class="adprod" onclick=" toggleModal('addprod-modal')">
           Add Product
         </button>
         <button class="view-users" onclick=" toggleModal('users-modal')">
@@ -46,49 +46,6 @@
     </div>
 
     <div id="products-container"></div>
-
-    <div id="cart-modal" class="modal">
-      <button onclick="toggleModal('cart-modal')" class="modalbtn">X</button>
-      <div class="cartmodal">
-        <form>
-          <input
-            required
-            type="text"
-            name="name"
-            id="name"
-            placeholder="name"
-          />
-          <input
-            required
-            type="text"
-            name="prod_type"
-            id="prod_type"
-            placeholder="prod_type"
-          />
-          <input
-            required
-            type="text"
-            name="description"
-            id="description"
-            placeholder="description"
-          />
-          <input
-            required
-            type="text"
-            name="price"
-            id="price"
-            placeholder="price"
-          />
-          <button
-            type="submit"
-            class="button-modal-adprod"
-            onclick="event.preventDefault(); addProduct()"
-          >
-            Submit Information
-          </button>
-        </form>
-      </div>
-    </div>
 
     <div id="users-modal" class="modal">
       <button onclick="toggleModal('users-modal')" class="modalbtn">X</button>

@@ -15,7 +15,24 @@ fetch("https://cryptic-escarpment-42625.herokuapp.com/products/")
 
 function renderproducts(products) {
   let productContainer = document.querySelector("#products-container");
-  productContainer.innerHTML = "";
+  productContainer.innerHTML = `
+  <div id="addprod-modal" class="modal">
+      <button onclick="toggleModal('addprod-modal')" class="modalbtn">X</button>
+      <div class="cartmodal">
+        <form>
+          <input type="file" id="Image" name="image" required />
+          <input required type="text" name="name" id="name" placeholder="name"/>
+          <input required type="text" name="prod_type" id="prod_type" placeholder="prod_type"/>
+          <input required type="text" name="description" id="description" placeholder="description"/>
+          <input required type="text" name="price" id="price" placeholder="price"/>
+          <button type="submit" class="button-modal-adprod" onclick="event.preventDefault(); addProduct()">
+            Submit Information
+          </button>
+        </form>
+        <img src="" alt="" class="format-img" />
+      </div>
+    </div>
+  `;
 
   products.forEach((product) => {
     productContainer.innerHTML += `
@@ -96,22 +113,24 @@ function imageConverter() {
 
 //Add Product function
 function addProduct() {
-  // get data from form
+  // get data from form\
+  let f_image = document.querySelector(".format-img").src;
   let name = document.querySelector("#name").value;
   let prod_type = document.querySelector("#prod_type").value;
   let description = document.querySelector("#description").value;
   let price = document.querySelector("#price").value;
 
-  console.log(username, password);
+  console.log(name, prod_type, description, price);
 
   // send data to api
   fetch(baseURL, {
     method: "POST",
     body: JSON.stringify({
-      name,
-      prod_type,
-      description,
-      price,
+      image: f_image,
+      name: name,
+      prod_type: prod_type,
+      description: description,
+      price: price,
     }),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
@@ -120,8 +139,8 @@ function addProduct() {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
+      window.location.reload();
     });
-  window.location.reload();
 }
 
 // edit function
