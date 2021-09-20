@@ -5,6 +5,13 @@
   align-items: flex-end;
   justify-content: space-around;
   background-color: #151623;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.link {
+  color: white;
 }
 
 #filters {
@@ -12,4 +19,128 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+
+.foot {
+  background-color: #151623;
+  color: aliceblue;
+  margin-top: 5%;
+  width: 100%;
+}
+
+.foot-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 10vh;
+}
+
+.logos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+}
+
+.logo {
+  font-family: "ＭＳ Ｐゴシック", "MS PGothic", "メイリオ", Meiryo, sans-serif;
+  font-weight: bolder;
+  font-size: 4em;
+  height: 65%;
+  display: flex;
+  align-items: center;
+}
+
+.logo-meaning {
+  font-style: italic;
+}
+
+section {
+  padding-top: 13vh;
+  padding-left: 2%;
+  padding-right: 2%;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* General button style */
+.prod-btn {
+  border: none;
+  font-family: "Lato", sans-serif;
+  font-size: inherit;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  outline: none;
+  position: relative;
+  transition: all 0.3s;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+}
+
+.prod-btn:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+/* Pseudo elements for icons */
+.prod-btn:before {
+  font-family: "FontAwesome";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-2 {
+  background: #17a7c6;
+  color: #fff;
+}
+
+.btn-2:hover {
+  background: #148ea8;
+}
+
+.btn-2:active {
+  background: #148ea8;
+  top: 2px;
+}
+
+.btn-2:before {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  line-height: 3;
+  font-size: 140%;
+  width: 60px;
+}
+
+/* Icon separator */
+.btn-sep {
+  padding: 25px 60px 25px 120px;
+}
+
+.btn-sep:before {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.icon-cart:before {
+  content: "\f07a";
 }

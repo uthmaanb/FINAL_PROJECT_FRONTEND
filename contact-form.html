@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>contact form</title>
+
+    <!-- fontawesome scripts -->
+    <script
+      src="https://kit.fontawesome.com/d85f3a3d4a.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="form-container">
+      <h3 class="cnt-form-head">
+        Let's grab a <span class="stndout mam"> coffee </span> or send me a
+        <span class="stndout mam">message</span>
+      </h3>
+
+      <form
+        id="contact-form"
+        action="https://formspree.io/f/xnqlwabg"
+        method="POST"
+      >
+        <input
+          class="contact-input"
+          type="text"
+          name="full_name"
+          id="full_name"
+          placeholder="Name"
+          required
+        />
+        <input
+          class="contact-input"
+          type="tel"
+          name="contact_no"
+          id="contact_no"
+          placeholder="Contact No"
+          required
+        />
+        <input
+          class="contact-input"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          required
+        />
+        <textarea
+          class="contact-input-msg"
+          name="message"
+          id="message"
+          placeholder="Type your message here"
+        ></textarea>
+        <button class="btn" type="submit">
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

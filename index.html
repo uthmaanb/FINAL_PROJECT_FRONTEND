@@ -1,3 +1,7 @@
+<!-- IMPORTANT!!!!!!!!! -->
+<!-- pressing "alt" + "a" redirects to admin page -->
+<!-- IMPORTANT!!!!!!!!! -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,44 +40,59 @@
         <button type="submit">login</button>
       </form>
       <div class="reglinks">
-        <p><a href="./register.html">not registered?</a></p>
-        <p><a href="./admin-login.html">admin login</a></p>
+        <p><a class="link" href="./register.html">not registered?</a></p>
       </div>
     </header>
 
-    <div id="filters">
-      <form onsubmit="event.preventDefault(); searchProd()">
-        <input type="text" required id="searchTerm" />
-        <button type="submit">search</button>
-      </form>
-      <div id="button-filter">
-        <button class="btn" onclick="productFilter('All')" class="name">
-          Show all
-        </button>
-        <button class="btn" onclick="productFilter('hoodie')" class="name">
-          hoodies
-        </button>
-        <button class="btn" onclick="productFilter('sweater')" class="name">
-          sweaters
-        </button>
-        <button class="btn" onclick="productFilter('t-shirt')" class="name">
-          t-shirts
-        </button>
-        <button class="btn" onclick="productFilter('cap')" class="name">
-          caps
-        </button>
-        <button class="btn" onclick="productFilter('hat')" class="name">
-          hats
-        </button>
-        <button class="btn" onclick="productFilter('beanie')" class="name">
-          beanies
-        </button>
+    <section>
+      <div class="logos">
+        <h1 class="logo">アニメアパレル</h1>
+        <h2 class="logo-meaning">anime apparel</h2>
       </div>
-    </div>
 
-    <h1>WELCOME</h1>
+      <div id="filters">
+        <form onsubmit="event.preventDefault(); searchProd()">
+          <input type="text" required id="searchTerm" />
+          <button type="submit">search</button>
+        </form>
+        <div id="button-filter">
+          <button class="btn" onclick="productFilter('All')" class="name">
+            Show all
+          </button>
+          <button class="btn" onclick="productFilter('hoodie')" class="name">
+            hoodies
+          </button>
+          <button class="btn" onclick="productFilter('sweater')" class="name">
+            sweaters
+          </button>
+          <button class="btn" onclick="productFilter('t-shirt')" class="name">
+            t-shirts
+          </button>
+          <button class="btn" onclick="productFilter('cap')" class="name">
+            caps
+          </button>
+          <button class="btn" onclick="productFilter('hat')" class="name">
+            hats
+          </button>
+          <button class="btn" onclick="productFilter('beanie')" class="name">
+            beanies
+          </button>
+        </div>
+      </div>
 
-    <div id="products-container"></div>
+      <h1>WELCOME</h1>
+
+      <div id="products-container"></div>
+    </section>
+    <footer class="foot">
+      <div class="foot-cont">
+        <p>Uthmaan Breda</p>
+        <a href="#">contact us</a>
+      </div>
+    </footer>
+
+    <!-- pressing "alt" + "a" redirects to admin page -->
+    <a accesskey="a" href="/admin-login.html"></a>
 
     <script src="./scripts/index.js"></script>
   </body>

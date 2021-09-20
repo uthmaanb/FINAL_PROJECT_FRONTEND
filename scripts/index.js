@@ -161,11 +161,11 @@ function renderproducts(products) {
     productContainer.innerHTML += `
 	  <div class="products">
     <img class="image image-prod" src=${product.image} alt="pic">
-		<h3>${product.name}</h3>
-		<h3 class="product-type">${product.prod_type}</h3>
-		<h3 class="product-discription">${product.description}</h3>
-		<h3 class="product-price">${product.price}</h3>
-		<button onclick="addToCart()">Cart</button>
+		<h1>${product.name}</h1>
+		<p class="product-type">${product.prod_type}</p>
+		<p class="product-discription">${product.description}</p>
+		<p class="product-price">R${product.price}</p>
+		<button class="prod-btn btn-2 btn-sep icon-cart" onclick="addToCart()">Add</button>
 	  </div>
 	`;
   });

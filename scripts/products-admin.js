@@ -59,10 +59,10 @@ function renderproducts(products) {
             <div class="editin">
               <form>
                 <input type="file" id="Image" name="image" required>
-                <input required type="text" name="name" id="name${product.prod_id}" placeholder="name"/>
-                <input required type="text" name="prod_type" id="prod_type${product.prod_id}" placeholder="prod_type"/>
-                <input required type="text" name="description" id="description${product.prod_id}" placeholder="description"/>
-                <input required type="text" name="price" id="price${product.prod_id}" placeholder="price"/>
+                <input required type="text" name="name" id="name${product.prod_id}" value="${product.name}"/>
+                <input required type="text" name="prod_type" id="prod_type${product.prod_id}" value="${product.prod_type}"/>
+                <input required type="text" name="description" id="description${product.prod_id}" value="${product.description}"/>
+                <input required type="text" name="price" id="price${product.prod_id}" value="${product.price}"/>
                 <button type="submit" class='button-modal trigger' onclick='event.preventDefault()' id="${product.prod_id}">Submit Information</button>
               </form>
               <img src="" alt="" class="format-img" />
@@ -161,35 +161,26 @@ function editProd(e) {
   console.log(name, prod_type, description, price, productid);
 
   // send data to api
-  if (
-    (document.querySelector(`#name${productid}`).value.length == 0,
-    document.querySelector(`#prod_type${productid}`).value.length == 0,
-    document.querySelector(`#description${productid}`).value.length == 0,
-    document.querySelector(`#price${productid}`).value.length == 0)
-  ) {
-    alert("input is empty");
-  } else {
-    fetch(
-      `https://cryptic-escarpment-42625.herokuapp.com/edit-product/${productid}`,
-      {
-        method: "PUT",
-        body: JSON.stringify({
-          image: f_image,
-          name: name,
-          prod_type: prod_type,
-          description: description,
-          price: price,
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-  }
+  fetch(
+    `https://cryptic-escarpment-42625.herokuapp.com/edit-product/${productid}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({
+        image: f_image,
+        name: name,
+        prod_type: prod_type,
+        description: description,
+        price: price,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+    });
 }
 
 // delete function
